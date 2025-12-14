@@ -1,0 +1,114 @@
+set cut_paste_input [stack 0]
+version 13.2 v8
+push $cut_paste_input
+Group {
+ name st_transform1
+ tile_color 0x493d91ff
+ selected true
+ xpos 5547
+ ypos 13115
+ addUserKnob {20 Controls}
+ addUserKnob {41 channels T STMap1.channels}
+ addUserKnob {41 translate T Transform1.translate}
+ addUserKnob {41 rotate T Transform1.rotate}
+ addUserKnob {41 scale T Transform1.scale}
+ addUserKnob {41 invert_matrix l invert T Transform1.invert_matrix}
+ addUserKnob {41 center T Transform1.center}
+ addUserKnob {22 center_1 l center -STARTLINE T "n = nuke.thisGroup()\nw= n.width()\nh=n.height()\nn\['center'].setValue(\[w/2,h/2])"}
+ addUserKnob {41 filter T STMap1.filter}
+ addUserKnob {41 clamp -STARTLINE T Transform1.clamp}
+ addUserKnob {41 black_outside l "black outside" -STARTLINE T Transform1.black_outside}
+ addUserKnob {41 motionblur T Transform1.motionblur}
+ addUserKnob {41 shutter T Transform1.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T Transform1.shutteroffset}
+ addUserKnob {41 mix T Keymix1.mix}
+}
+ Input {
+  inputs 0
+  name img
+  xpos 0
+  ypos -240
+ }
+set Naf603800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 96
+  ypos -236
+ }
+ Dot {
+  name Dot1
+  xpos 96
+  ypos -114
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -198
+  ypos -207
+  number 1
+ }
+push $Naf603800
+ Remove {
+  name Remove1
+  xpos -103
+  ypos -246
+ }
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+.5)/height
+  name STMAP
+  tile_color 0xa963eff
+  xpos -103
+  ypos -208
+ }
+set N46e71c00 [stack 0]
+ Transform {
+  center {2048 1080}
+  name Transform1
+  xpos -197
+  ypos -176
+ }
+push $N46e71c00
+ Keymix {
+  inputs 3
+  bbox B
+  name Keymix1
+  xpos -103
+  ypos -182
+ }
+push $Naf603800
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap1
+  xpos 0
+  ypos -182
+ }
+ Crop {
+  box {{curve} {curve} {STMAP.width} {STMAP.height}}
+  name Crop2
+  xpos 0
+  ypos -144
+  disable {{parent.crop-1 x1001 1}}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 0
+  ypos -118
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos -92
+ }
+ Viewer {
+  inputs 0
+  frame 1009
+  frame_range 1001-1101
+  center_fstop 0
+  name Viewer1
+  xpos -446
+  ypos 698
+ }
+end_group
